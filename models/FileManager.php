@@ -3,11 +3,13 @@
 namespace artsoft\fileinput\models;
 
 use Yii;
+use artsoft\fileinput\FileInputModule;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use artsoft\models\User;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
+
 /**
  * This is the model class for table "{{%file_manager}}".
  *
@@ -148,14 +150,14 @@ class FileManager extends \yii\db\ActiveRecord {
      * @return type string
      */
     public static function getAbsoluteDir(){
-        return Yii::getAlias(\artsoft\fileinput\FileInputModule::getInstance()->absolutePath);
+        return Yii::getAlias(FileInputModule::getInstance()->absolutePath);
     } 
     /**
      * 
      * @return type string
      */
     public static function getUploadDir(){
-        return Yii::getAlias(\artsoft\fileinput\FileInputModule::getInstance()->uploadPath);
+        return Yii::getAlias(FileInputModule::getInstance()->uploadPath);
     }
     /**
      * 
