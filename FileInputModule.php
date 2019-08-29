@@ -17,8 +17,6 @@ class FileInputModule extends \yii\base\Module
     const VERSION = '0.1.0';
 
     public $controllerNamespace = 'artsoft\fileinput\controllers';
-    
-    public $view;
 
      /**
      * 

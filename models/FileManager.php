@@ -150,14 +150,14 @@ class FileManager extends \yii\db\ActiveRecord {
      * @return type string
      */
     public static function getAbsoluteDir(){
-        return Yii::getAlias(FileInputModule::getInstance()->absolutePath);
+        return Yii::$app->getModule('fileinput')->absolutePath;
     } 
     /**
      * 
      * @return type string
      */
     public static function getUploadDir(){
-        return Yii::getAlias(FileInputModule::getInstance()->uploadPath);
+        return Yii::$app->getModule('fileinput')->uploadPath;
     }
     /**
      * 
