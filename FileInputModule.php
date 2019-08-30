@@ -5,6 +5,8 @@ namespace artsoft\fileinput;
 use Yii;
 use yii\helpers\StringHelper;
 use yii\base\InvalidConfigException;
+use yii\helpers\BaseFileHelper;
+
 /**
  * HTML FileInput Module For Art CMS
  * 
@@ -57,6 +59,11 @@ class FileInputModule extends \yii\base\Module
         }
         if (!is_writable($this->absolutePath)) {
             throw new InvalidConfigException('Path is not writable! Check chmod!');
+        }
+        
+        if (!file_exists(Yii::getAlias($this->absolutePath . '_errors'))) {
+            BaseFileHelper::copyDirectory(Yii::getAlias('@vendor/artsoft/yii2-art-fileinput/assets/images'),
+                Yii::getAlias($this->absolutePath . '_errors'));
         }
         parent::init();       
        

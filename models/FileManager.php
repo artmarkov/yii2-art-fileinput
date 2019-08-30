@@ -3,7 +3,6 @@
 namespace artsoft\fileinput\models;
 
 use Yii;
-use artsoft\fileinput\FileInputModule;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use artsoft\models\User;
@@ -176,12 +175,9 @@ class FileManager extends \yii\db\ActiveRecord {
         $uploadDir = Url::to('/', true) . $this->getUploadDir();
 
         if ($this->name && file_exists($this->getRoutes())) {
-
-            //$path = Url::to('/', true) . $uploadDir . DIRECTORY_SEPARATOR . $this->class . DIRECTORY_SEPARATOR . $this->name;
             $path = "{$uploadDir}/{$this::getFolder($this->class)}/{$this->name}";
         } else {
-            //$path = Url::to('/', true) . $uploadDir . DIRECTORY_SEPARATOR . 'nophoto.svg';
-            $path = "{$uploadDir}/nofile.jpg";
+            $path = "{$uploadDir}/_errors/nofile.png";
         }
         return $path;
     }
