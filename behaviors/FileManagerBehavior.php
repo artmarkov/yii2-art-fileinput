@@ -68,13 +68,17 @@ class FileManagerBehavior extends \yii\base\Behavior {
         return count($data);
     }
 
-    public function beforeDelete()
+    public function getFileColumn() 
     {
-        $data = FileManager::find()
+        return FileManager::find()
                         ->andWhere(['class' => $this->owner->formName()])
                         ->andWhere(['item_id' => $this->owner->id])
                         ->asArray()->column();
-        foreach ($data as $id)
+    }
+
+    public function beforeDelete()
+    {
+        foreach ($this->getFileColumn() as $id)
         {
             FileManager::findOne($id)->delete();
         }

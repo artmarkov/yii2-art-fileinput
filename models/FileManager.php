@@ -108,7 +108,7 @@ class FileManager extends \yii\db\ActiveRecord {
         $name = $file->name;
         $model->name = strtotime('now') . '_' . Yii::$app->getSecurity()->generateRandomString(6) . '.' . $file->extension;
         $model->orig_name = $name;
-        $model->alt = $name;
+        $model->alt = '';
         $model->type = ArrayHelper::getValue(self::TYPE, $file->extension . '.type') ? ArrayHelper::getValue(self::TYPE, $file->extension . '.type') : 'image';
         $model->filetype = ArrayHelper::getValue(self::TYPE, $file->extension . '.filetype');
         $model->size = $file->size;
@@ -123,17 +123,26 @@ class FileManager extends \yii\db\ActiveRecord {
     public function beforeDelete() {
         if (parent::beforeDelete()) {
             FileManager::updateAllCounters(['sort' => -1], [
-                'and', ['class' => $this->class, 'item_id' => $this->item_id], [ '>', 'sort', $this->sort]
+                'and', ['class' => $this->class, 'item_id' => $this->item_id], ['>', 'sort', $this->sort]
             ]);
-            //удаляем физически              
-                    if (file_exists($this->getRoutes())) {
-                        @unlink($this->getRoutes());
-                    }
             
+            //удаляем физически, если нигде больше не используется          
+            if ($this::getCountFileForName() == 1 && file_exists($this->getRoutes())) {
+                @unlink($this->getRoutes());
+            }
+
             return true;
         } else {
             return false;
         }
+    }
+
+    /**
+     * 
+     * @return type int
+     */
+    public function getCountFileForName() {
+      return $this->find()->andWhere(['name' => $this->name])->count();
     }
 
     /**
