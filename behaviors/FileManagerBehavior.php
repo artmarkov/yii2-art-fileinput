@@ -18,9 +18,9 @@ use yii\db\ActiveRecord;
  * {
  *     return [
  *             'fileManager' => [
-                    'class' => \artsoft\fileinput\behaviors\FileManagerBehavior::className(),
-                    // 'owner_id' => 'id',
-                    ],
+ *                  'class' => \artsoft\fileinput\behaviors\FileManagerBehavior::className(),
+ *               // 'owner_id' => 'id',
+ *],
  *     ];
  * }
  */
@@ -28,25 +28,21 @@ class FileManagerBehavior extends \yii\base\Behavior {
 
     public $owner_id = 'id';
 
-    public function events()
-    {
+    public function events() {
         return [
             ActiveRecord::EVENT_BEFORE_DELETE => 'beforeDelete'
         ];
     }
 
-    public function getFiles()
-    {
+    public function getFiles() {
         return $this->owner->hasMany(FileManager::className(), ['item_id' => $this->owner_id])->orderBy('sort');
     }
 
-    public function getFilesLinks()
-    {
+    public function getFilesLinks() {
         return ArrayHelper::getColumn($this->owner->files, 'fileUrl');
     }
 
-    public function getFilesLinksData()
-    {
+    public function getFilesLinksData() {
         return ArrayHelper::toArray($this->owner->files, [
                     FileManager::className() => [
                         'type' => 'type',
@@ -62,24 +58,20 @@ class FileManagerBehavior extends \yii\base\Behavior {
         );
     }
 
-    public function getFilesCount()
-    {
+    public function getFilesCount() {
         $data = ArrayHelper::getColumn($this->owner->files, 'id');
         return count($data);
     }
 
-    public function getFileColumn() 
-    {
+    public function getFileColumn() {
         return FileManager::find()
                         ->andWhere(['class' => $this->owner->formName()])
                         ->andWhere(['item_id' => $this->owner->id])
                         ->asArray()->column();
     }
 
-    public function beforeDelete()
-    {
-        foreach ($this->getFileColumn() as $id)
-        {
+    public function beforeDelete() {
+        foreach ($this->getFileColumn() as $id) {
             FileManager::findOne($id)->delete();
         }
     }
