@@ -20,10 +20,11 @@ use yii\db\ActiveRecord;
  *             'fileManager' => [
  *                  'class' => \artsoft\fileinput\behaviors\FileManagerBehavior::className(),
  *               // 'owner_id' => 'id',
- *],
+ *             ],
  *     ];
  * }
  */
+
 class FileManagerBehavior extends \yii\base\Behavior {
 
     public $owner_id = 'id';
