@@ -31,10 +31,20 @@ class FileManager extends \yii\db\ActiveRecord {
      * array const
      */
     const TYPE = [
-            'jpg' => ['type' => 'image'],
-            'png' => ['type' => 'image', 'filetype' => 'image/png'],
-            'pdf' => ['type' => 'pdf'],
-            'mp4' => ['type' => 'video', 'filetype' => 'video/mp4'],
+            'txt'  => ['type' => 'text'],
+            'doc'  => ['type' => 'other'],
+            'docx' => ['type' => 'other'],
+            'xls'  => ['type' => 'other'],
+            'xlsx' => ['type' => 'other'],
+            'ppt'  => ['type' => 'other'],
+            'pptx' => ['type' => 'other'],
+            'zip'  => ['type' => 'other'],
+            'rar'  => ['type' => 'other'],
+            'pdf'  => ['type' => 'pdf'],
+            'jpg'  => ['type' => 'image'],
+            'png'  => ['type' => 'image', 'filetype' => 'image/png'],
+            'mp4'  => ['type' => 'video', 'filetype' => 'video/mp4'],
+            'mp3'  => ['type' => 'audio', 'filetype' => 'audio/mp3'],
         ];
 
       /**
