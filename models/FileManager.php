@@ -5,6 +5,8 @@ namespace artsoft\fileinput\models;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use artsoft\models\OwnerAccess;
+use artsoft\db\ActiveRecord;
 use artsoft\models\User;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
@@ -25,7 +27,8 @@ use yii\helpers\ArrayHelper;
  * @property int $created_at
  * @property int $created_by
  */
-class FileManager extends \yii\db\ActiveRecord {
+
+class FileManager extends ActiveRecord implements OwnerAccess {
 
     /**
      * array const
@@ -87,23 +90,6 @@ class FileManager extends \yii\db\ActiveRecord {
             [['type', 'filetype'], 'safe'],
             [['orig_name', 'name', 'class', 'alt'], 'string', 'max' => 256],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels() {
-        return [
-            'id' => Yii::t('art', 'ID'),
-            'orig_name' => Yii::t('art', 'Orig Name'),
-            'name' => Yii::t('art', 'Name'),
-            'class' => Yii::t('art', 'Class'),
-            'item_id' => Yii::t('art', 'Item ID'),
-            'alt' => Yii::t('art', 'Alt'),
-            'type' => Yii::t('art', 'Type'),
-            'filetype' => Yii::t('art', 'Filetype'),
-            'size' => Yii::t('art', 'Size'),
         ];
     }
     
@@ -199,6 +185,22 @@ class FileManager extends \yii\db\ActiveRecord {
             $path = "{$uploadDir}/_errors/nofile.png";
         }
         return $path;
+    }
+    /**
+     *
+     * @inheritdoc
+     */
+    public static function getOwnerField()
+    {
+        return 'created_by';
+    }
+    /**
+     *
+     * @inheritdoc
+     */
+    public static function getFullAccessPermission()
+    {
+        return 'fullFileinputAccess';
     }
 
 }

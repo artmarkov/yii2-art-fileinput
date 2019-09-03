@@ -2,7 +2,6 @@
 
 namespace artsoft\fileinput\controllers;
 
-
 use Yii;
 use yii\web\UploadedFile;
 use artsoft\fileinput\models\FileManager;
@@ -15,6 +14,8 @@ use yii\web\BadRequestHttpException;
  * @author markov-av
  */
 class FileManagerController extends \artsoft\controllers\admin\BaseController {
+
+    public $enableOnlyActions = ['file-upload', 'sort-file', 'delete-file'];
 
     /**
      * 
