@@ -10,7 +10,7 @@
   ],
   "require": {
     "artsoft/yii2-art-core": "dev-master",
-    "kartik-v/yii2-widget-fileinput": "=5.0.8"
+    "kartik-v/yii2-widget-fileinput": "=1.0.8"
   },
   "autoload": {
     "psr-4": {
